@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
+@theme {
+  /* Oakes Grotesk and Nohemi are commercial faces; Plus Jakarta Sans and Archivo Expanded are the closest free matches. */
+  --font-grotesk: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-manrope: var(--font-manrope-family), ui-sans-serif, system-ui, sans-serif;
+  --font-outfit: var(--font-outfit-family), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #171717;
+  --color-ink-soft: #262626;
+  --color-heading: #2b2b2b;
+  --color-body: #414141;
+  --color-primary: #1253ed;
+  --color-primary-hover: #013ecf;
+  --color-on-primary: #fafafa;
+  --color-brand: #c33241;
+  --color-blush: #f9ebec;
+  --color-mint: #1da077;
+  --color-track: #ededed;
+  --color-thumb: #cfcfcf;
+  --color-bubble: #d9d9d9;
+
+  /* Figma prototype easings: "Ease in and out back", and the "Gentle" spring
+     (stiffness 100, damping 15, mass 1) sampled over its 1.02s duration. */
+  --ease-back-in-out: cubic-bezier(0.7, -0.4, 0.4, 1.4);
+  --ease-gentle: linear(0, 0.068, 0.22, 0.398, 0.569, 0.714, 0.828, 0.911, 0.967, 1.001, 1.02, 1.027, 1.028, 1.025, 1.02, 1.015, 1.011, 1.007, 1.004, 1.002, 1, 1, 0.999, 0.999, 0.999, 0.999);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gutter: 20px;
+  --content-width: 1216px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gutter: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 64px;
+  }
+}
+
+/* Centred content column; at 1440px it leaves the design's 112px side margins. */
+@utility shell {
+  width: 100%;
+  max-width: calc(var(--content-width) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Nohemi's numerals are wide, so the substitute runs at a semi-expanded Archivo width. */
+@utility font-display-wide {
+  font-family: var(--font-display);
+  font-stretch: 110%;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
 }
